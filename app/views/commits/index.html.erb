@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="page-header">
+      <h1>Recent Activity</h1>
+      <h4>See which trips your friends have joined</h4>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped table-hover">
+      <tr>
+
+        <th>User</th>
+
+        <th>Profile</th>
+
+        <th>Joined Trip</th>
+
+        <th>Trip Details</th>
+
+        <th>Dates</th>
+
+        <th>Trip Leader</th>
+
+      </tr>
+
+      <% @commits.each do |commit| %>
+      <tr>
+
+        <td>
+          <a href="/users/<%= commit.user.id %>"><img src="<%= commit.user.avatar_url %>" class="img-circle" width= 80 pt></a>
+        </td>
+
+        <td>
+          <a href="/users/<%= commit.user.id %>"><%= commit.user.username %></a> joined a trip!
+        </td>
+
+
+
+        <td>
+          <a href = "/trips/<%= commit.trip_id %>">
+            <img src="<%= commit.trip.image_url  %>" width = 90 pt>
+          </a>
+        </td>
+        <td>
+          <a href = "/trips/<%= commit.trip_id %>"><%= commit.trip.country  %></a>
+        </td>
+
+        <td>
+          <%= commit.trip.start_date %> to <%= commit.trip.end_date %>
+        </td>
+
+
+        <td>
+          <a href="users/<%= commit.trip.user_id %>"><%= commit.trip.user.username %></a>
+        </td>
+
+      </tr>
+      <% end %>
+
+    </table>
+  </div>
+</div>
+

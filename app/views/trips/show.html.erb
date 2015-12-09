@@ -1,0 +1,254 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <h1 class="page-header">
+        <%= @trip.country %> with <%= @trip.user.username %>
+        <small><%= @trip.name %></small>
+
+
+
+      <% if (@trip.max_group - @trip.commits.count)> 0 %>
+
+        <span class="label label-primary">Spots Available</span>
+
+     <% else %>
+
+        <span class="label label-danger">Full!</span>
+
+    <% end  %>
+
+
+
+      </h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-8">
+      <img src= "<%= @trip.image_url %>" class="img-responsive" width = 800 pt style="padding-bottom: 35px;">
+    </div>
+
+    <div class="col-lg-4">
+
+      <h3 class="page-header">Trip Info:</h3>
+
+      <dl class="dl-horizontal">
+        <dt>
+          <i class="fa fa-user"></i> Trip Leader:
+        </dt>
+        <dd>
+          <a href="/users/<%= @trip.user.id %>" style="font: blue">
+            <%= @trip.user.username %>
+          </a>
+        </dd>
+
+        <dt>
+          <i class="fa fa-users"></i>
+          Attendees (<%= @trip.commits.count %>):
+        </dt>
+        <dd>
+          <% @trip.commits.each do |commit| %>
+          <a href="/users/<%= commit.user_id %>">
+            <%= commit.user.username %>
+          </a>
+          <% end %>
+        </dd>
+
+        <dt><i class="fa fa-crosshairs"></i>Tracker:</dt>
+
+        <dd>
+          <% if (@trip.max_group - @trip.commits.count)<= 0 %>
+          Trip is full! No more spots available
+          <% else %>
+          <%= @trip.max_group - @trip.commits.count %> Spots left before trip is full!
+          <% end  %>
+        </dd>
+
+        <dd>
+          <% if (@trip.min_group - @trip.commits.count)<= 0 %>
+          Trip has Lauched! We're ready to go
+          <% else %>
+          <%= @trip.min_group - @trip.commits.count %> More Attendees Needed for Launch!
+          <% end  %>
+        </dd>
+
+        <dt>Start Date:</dt>
+        <dd><%= @trip.start_date %></dd>
+
+        <dt>End Date:</dt>
+        <dd><%= @trip.end_date %></dd>
+      </dl>
+
+      <h3 class="page-header">Message:</h3>
+      <p><%= @trip.description %></p>
+
+      <% if (@trip.max_group - @trip.commits.count)> 0 %>
+
+      <form action="/create_commit" method="post">
+        <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+        <div class="form-group">
+          <input type="hidden" id="trip_id" name="trip_id" class="form-control" value="<%= @trip.id %>">
+
+          <input type="hidden" id="user_id" name="user_id" class="form-control" value="<%= current_user.id %>">
+        </div>
+
+        <button class="btn btn-success btn-block">
+         Join Trip!
+       </button>
+     </form>
+
+     <% else %>
+
+     <a href="/trips" class="btn btn-danger btn-block">
+      Trip is Full! Find another...
+    </a>
+
+    <% end  %>
+
+  </div>
+</div>
+
+<div class="row" style="padding-top: 50px;">
+  <div class="col-lg-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Country Info
+      </div>
+      <div class="panel-body">
+        <dl class="dl-horizontal">
+
+          <dt>Country:</dt>
+          <dd><%= @country_name_full %></dd>
+
+          <dt>Native Name:</dt>
+          <dd><%= @country_name_native %></dd>
+
+          <dt>Capital:</dt>
+          <dd><%= @capital_city %></dd>
+
+          <dt>Population:</dt>
+          <dd><%= @population %></dd>
+
+          <dt>Currency:</dt>
+          <dd><%= @currencies %></dd>
+
+          <dt>Language ISO:</dt>
+          <dd><%= @languages %></dd>
+
+          <dt>Calling Code:</dt>
+          <dd>+<%= @calling_codes %></dd>
+
+          <dt>Region:</dt>
+          <dd><%= @sub_region %></dd>
+
+          <dt>Time Zones:</dt>
+          <dd><%= @time_zones %></dd>
+
+          <dt>Latitude:</dt>
+          <dd><%= @latitude %></dd>
+
+          <dt>Longitude:</dt>
+          <dd><%= @longitude  %></dd>
+
+
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Weather
+      </div>
+      <div class="panel-body">
+        <dl class="dl-horizontal">
+
+          <dt>Today:</dt>
+          <dd><%= @current_summary %></dd>
+
+          <dt>Current Temp. (F):</dt>
+          <dd><%= @current_temperature %></dd>
+
+          <dt>Low:</dt>
+          <dd><%= @today_low %></dd>
+
+          <dt>High:</dt>
+          <dd><%= @today_high %></dd>
+
+          <dt>Tomorrow:</dt>
+          <dd><%= @tomorrow_summary %></dd>
+
+          <dt>Low:</dt>
+          <dd><%= @tomorrow_low %></dd>
+
+          <dt>High:</dt>
+          <dd><%= @tomorrow_high %></dd>
+
+          <dt>Weekly Summary:</dt>
+          <dd><%= @summary_of_next_several_days %></dd>
+
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Leader Profile
+      </div>
+      <div class="panel-body">
+
+        <dl class="dl-horizontal">
+
+          <dt>
+            <a href="/users/<%= @trip.user_id %>"><%= @trip.user.username %></a>
+          </dt>
+
+          <dd>
+            <a href="/users/<%= @trip.user_id %>">
+              <img src= "<%= @trip.user.avatar_url %>" class="img-responsive img-rounded" width = 140 pt style="padding-right: 35px;">
+            </a>
+          </dd>
+
+
+          <dt>About Me</dt>
+          <dd><%= @trip.user.about_me %></dd>
+
+          <dt>Contact Info</dt>
+          <dd><%= @trip.user.email %></dd>
+
+        </dl>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="row">
+  <div class="col-xs-12">
+    <% if current_user.id == @trip.user.id %>
+    <h1 class="page-header">Administrator Options:</h1>
+    <div class="btn-group btn-group-justified" style="padding: 10px;">
+      <a href="/trips" class="btn btn-primary">
+        Back to Trips
+      </a>
+      <a href="/trips/<%= @trip.id %>/edit" class="btn btn-warning">
+        Edit Trip
+      </a>
+      <a href="/delete_trip/<%= @trip.id %>" class="btn btn-danger" rel="nofollow">
+        Delete Trip
+      </a>
+
+      <% else %>
+      <a href="/trips" class="btn btn-primary btn-block">
+        Back to Trips
+      </a>
+      <% end  %>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,141 @@
+<!-- Validation failure messages -->
+<% if @trip.errors.any? %>
+<% @trip.errors.full_messages.each do |message| %>
+<div class="alert alert-dismissable alert-danger">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <%= message %>
+</div>
+<% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Edit Trip #<%= @trip.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+
+    <form action="/update_trip/<%= @trip.id %>" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+
+
+      <!-- Label and input for name -->
+
+      <div class="form-group">
+        <label for="name" class="control-label">
+          Name
+        </label>
+
+
+        <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="<%= @trip.name %>">
+
+      </div>
+
+
+      <!-- Label and input for country -->
+
+      <div class="form-group">
+        <label for="country" class="control-label">
+          Country
+        </label>
+
+
+        <input type="text" id="country" name="country" placeholder="Country" class="form-control" value="<%= @trip.country %>">
+
+      </div>
+
+
+      <!-- Label and input for user_id -->
+
+      <div class="form-group">
+
+        <input type="hidden" id="user_id" name="user_id" class="form-control" value="<%= @trip.user_id %>">
+
+      </div>
+
+
+
+      <!-- Label and input for min_group -->
+
+      <div class="form-group">
+        <label for="min_group" class="control-label">
+          Min group
+        </label>
+
+
+        <input type="text" id="min_group" name="min_group" placeholder="Min group" class="form-control" value="<%= @trip.min_group %>">
+
+      </div>
+
+
+
+      <!-- Label and input for max_group -->
+
+      <div class="form-group">
+        <label for="max_group" class="control-label">
+          Max group
+        </label>
+
+
+        <input type="text" id="max_group" name="max_group" placeholder="Max group" class="form-control" value="<%= @trip.max_group %>">
+
+      </div>
+
+
+
+      <!-- Label and input for description -->
+
+      <div class="form-group">
+        <label for="description" class="control-label">
+          Description
+        </label>
+
+
+        <input type="text" id="description" name="description" placeholder="Description" class="form-control" value="<%= @trip.description %>">
+
+      </div>
+
+
+
+      <!-- Label and input for start_date -->
+
+      <div class="form-group">
+        <label for="start_date" class="control-label">
+          Start date
+        </label>
+
+
+        <input type="text" id="start_date" name="start_date" placeholder="Start date" class="form-control" value="<%= @trip.start_date %>">
+
+      </div>
+
+
+
+      <!-- Label and input for end_date -->
+
+      <div class="form-group">
+        <label for="end_date" class="control-label">
+          End date
+        </label>
+
+
+        <input type="text" id="end_date" name="end_date" placeholder="End date" class="form-control" value="<%= @trip.end_date %>">
+
+      </div>
+
+
+
+      <button class="btn btn-warning">
+        Update Trip
+      </button>
+      or
+
+      <a href="/trips/<%= @trip.id %>">Cancel</a>
+
+
+    </form>
+
+  </div>
+</div>

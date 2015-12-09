@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <h1 class="page-header">
+        <%= @user.username %>
+      </h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-4">
+      <img src= "<%= @user.avatar_url %>" class="img-responsive img-rounded" width = 400 pt style="padding-right: 35px;">
+    </div>
+
+    <div class="col-lg-8">
+      <h3>About Me</h3>
+      <p><%= @user.about_me %></p>
+
+      <h3>Contact Info</h3>
+      <p><%= @user.email %></p>
+
+      <% if  current_user.id == @user.id %>
+      <h3>Update Account</h3>
+      <a href="/users/edit">
+        <button class="btn-warning">
+          Edit or Delete
+        </button>
+
+      </a>
+
+      <% end %>
+
+    </div>
+  </div>
+
+  <div class="row" style="padding-top: 50px;">
+    <div class="col-lg-6">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          Trips I'm Leading
+        </div>
+        <div class="panel-body" >
+          <%  @user.trips.each do |trip| %>
+          <div class="row">
+            <a href="/trips/<%= trip.id %>">
+              <img src="<%= trip.image_url %>" width = 150 pt style="padding: 10px; float:left">
+            </a>
+            <h4>
+              <a href="/trips/<%= trip.id %>"><%= trip.country %></a>
+            </h4>
+            <h4>
+              <small><%= trip.start_date %> to <%= trip.end_date %></small>
+            </h4>
+          </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          Trips Attending
+        </div>
+        <div class="panel-body" >
+          <%  @user.commits.each do |commit| %>
+          <div class="row">
+            <a href="/trips/<%= commit.trip_id %>">
+              <img src="<%= commit.trip.image_url %>" width = 150 pt style="padding: 10px; float:left">
+            </a>
+            <h4>
+              <a href="/trips/<%= commit.trip_id %>">
+                <%= commit.trip.country %> w. <%= commit.trip.user.username %>
+              </a>
+            </h4>
+            <h4>
+              <small><%= commit.trip.start_date %> to <%= commit.trip.end_date %></small>
+            </h4>
+          </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+

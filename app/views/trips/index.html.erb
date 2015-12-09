@@ -1,0 +1,125 @@
+<div class="row">
+  <div class="col-md-8 col-md-offset-2" style="padding-bottom: 10px;">
+    <h2>TravelGroups</h2>
+    <h5>Seeing the world together has never been easier</h5>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2" style="padding-bottom: 20px;">
+    <h5>Two ways travel:</h5>
+    <p>Join one of the trips below. Or organize a new one!</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2" style="padding-bottom: 20px;">
+    <a href="/trips/new" class="btn btn-default btn-block" >
+      <i class="fa fa-plus">Organize New Group Trip</i>
+    </a>
+  </div>
+</div>
+
+<% @trips.each do |trip| %>
+
+<div class="row" style="padding-bottom: 40px;">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= trip.country %> with <%= trip.user.username %></h3>
+        <h4 class="panel-title"><%= trip.name %></h4>
+        <h4 class="panel-title">Dates: <%= trip.start_date %> to <%= trip.end_date %></h4>
+      </div>
+      <div class="panel-body">
+        <a href="/trips/<%= trip.id %>">
+          <img src= "<%= trip.image_url %>" class="img-responsive" width = 700 pt>
+        </a>
+      </div>
+
+      <div class="panel-body">
+
+        <dl class="dl-horizontal">
+
+          <dt>
+            <i class="fa fa-user"></i> TRIP LEADER:
+          </dt>
+          <dd>
+            <a href="/users/<%= trip.user.id %>" style="font: blue">
+              <%= trip.user.username %>
+            </a>
+          </dd>
+
+          <dt>
+            <i class="fa fa-users"></i>
+            ATTENDEES (<%= trip.commits.count %>):
+          </dt>
+          <dd>
+            <% trip.commits.each do |commit| %>
+            <a href="users/<%= commit.user.id %>">
+              <%= commit.user.username %>
+            </a>
+            <% end %>
+          </dd>
+
+          <dt><i class="fa fa-crosshairs"></i>TRACKER:</dt>
+
+          <dd>
+            <% if (trip.max_group - trip.commits.count)<= 0 %>
+            Trip is full! No more spots available
+            <% else %>
+            <%= trip.max_group - trip.commits.count %> Spots left before trip is full!
+            <% end  %>
+          </dd>
+
+          <dd>
+            <% if (trip.min_group - trip.commits.count)<= 0 %>
+            Trip has Lauched! We're ready to go
+            <% else %>
+            <%= trip.min_group - trip.commits.count %> More Attendees Needed for Launch!
+            <% end  %>
+          </dd>
+
+        </dl>
+
+        <div class ="row" style="padding: 20px;">
+          <button class="btn btn-default btn-block">
+            <a href="/trips/<%= trip.id %>">
+              More Details
+            </a>
+          </button>
+
+          <% if (trip.max_group - trip.commits.count)> 0 %>
+
+          <form action="/create_commit" method="post">
+            <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+            <div class="form-group">
+              <input type="hidden" id="trip_id" name="trip_id" class="form-control" value="<%= trip.id %>">
+
+              <input type="hidden" id="user_id" name="user_id" class="form-control" value="<%= current_user.id %>">
+            </div>
+
+            <button class="btn btn-success btn-block">
+             Join Trip!
+           </button>
+         </form>
+
+         <% else %>
+
+         <a href="/trips" class="btn btn-danger btn-block">
+          Trip is Full! Find another...
+        </a>
+
+        <% end  %>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div>
+
+
+<% end %>
+

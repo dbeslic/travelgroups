@@ -1,0 +1,85 @@
+<div class = "row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h3 class="panel-title">Edit <%= resource_name.to_s.humanize %></h3>
+      </div>
+
+      <div class="panel-body">
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+        <%= devise_error_messages! %>
+
+
+        <div class = "form-group">
+          <div class="field">
+            <%= f.label :email, :class => "control-label" %>
+            <%= f.email_field :email, :class => "form-control", autofocus: true %>
+          </div>
+        </div>
+
+        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+        <% end %>
+
+        <div class = "form-group">
+          <div class="field">
+            <%= f.label :password, :class => "control-label" %> <i>(leave blank if you don't want to change it)</i>
+            <%= f.password_field :password, :class => "form-control", autocomplete: "off" %>
+          </div>
+        </div>
+
+        <div class = "form-group">
+          <div class="field">
+            <%= f.label :password_confirmation, :class => "control-label" %>
+            <%= f.password_field :password_confirmation, :class => "form-control", autocomplete: "off" %>
+          </div>
+        </div>
+
+        <div class = "form-group">
+          <div class="field">
+            <%= f.label :current_password, :class => "control-label" %> <i>(we need your current password to confirm your changes)</i>
+            <%= f.password_field :current_password, :class => "form-control", autocomplete: "off" %>
+          </div>
+        </div>
+
+        <div class = "form-group">
+          <div class="field">
+            <%= f.label :avatar_url, :class => "control-label" %>
+            <%= f.text_field :avatar_url, :class => "form-control", autofocus: true %>
+          </div>
+        </div>
+
+        <div class = "form-group">
+          <div class="field">
+            <%= f.label :about_me, :class => "control-label" %>
+            <%= f.text_field :about_me, :class => "form-control", autofocus: true, :value => current_user.about_me   %>
+          </div>
+        </div>
+
+        <div class = "form-group">
+          <div class="actions">
+            <%= f.submit "Update", :class => "btn-success btn-block" %>
+          </div>
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class = "row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title">Cancel my account</h3>
+      </div>
+
+      <div class="panel-body">
+        <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, :class => "btn-danger btn-block", method: :delete %></p>
+
+        <%= link_to "Back", :back, :class => "btn-default btn-block" %>
+      </div>
+    </div>
+  </div>
+</div>

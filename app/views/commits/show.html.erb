@@ -1,0 +1,37 @@
+<div class="page-header">
+  <h3>Commit #<%= @commit.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+
+      <dt>Trip</dt>
+      <dd><%= @commit.trip_id %></dd>
+
+
+      <dt>User</dt>
+      <dd><%= @commit.user_id %></dd>
+
+
+      <dt>Friend count</dt>
+      <dd><%= @commit.friend_count %></dd>
+
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+
+      <a href="/commits" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/commits/<%= @commit.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_commit/<%= @commit.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+
+    </div>
+  </div>
+</div>
