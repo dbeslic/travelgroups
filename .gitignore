@@ -15,3 +15,8 @@
 /log/*
 !/log/.keep
 /tmp
+
+# Ignore application configuration
+/config/application.yml
+
+mashape_key = "w0xJ26tPlkmshqr5L2ks8E7XEmk1p1ycwVOjsnnA4LYA37tCNH"
